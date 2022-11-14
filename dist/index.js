@@ -136,6 +136,7 @@ function createVm(session, instanceService, imageService, vmParams, repo) {
                     subnetId: vmParams.subnetId,
                     primaryV4AddressSpec: {
                         oneToOneNatSpec: {
+                            address: vmParams.ipAddress,
                             ipVersion: instance_1.IpVersion.IPV4,
                         },
                     },
@@ -197,6 +198,7 @@ function parseVmInputs() {
     }
     const zoneId = core.getInput('vm-zone-id') || 'ru-central1-a';
     const subnetId = core.getInput('vm-subnet-id', { required: true });
+    const ipAddress = core.getInput('vm-public-ip');
     const platformId = core.getInput('vm-platform-id') || 'standard-v3';
     const cores = parseInt(core.getInput('vm-cores') || '2', 10);
     const memory = (0, memory_1.parseMemory)(core.getInput('vm-memory') || '1Gb');
@@ -208,6 +210,7 @@ function parseVmInputs() {
         diskType,
         diskSize,
         subnetId,
+        ipAddress,
         zoneId,
         platformId,
         folderId,
